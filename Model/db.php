@@ -24,7 +24,7 @@ class db{
 	 */
 	function __construct(){
 		//$this->db_connect('localhost','id1722893_root','DB_CII_2017','id1722893_asistencia');
-		$this->db_connect('localhost','panelero','P4n3l4','CIIO2018');
+		$this->db_connect('localhost','root','maderable_852','CIIO2018');
 	}
 
 
@@ -188,7 +188,13 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 		$registro=$existe->fetch_object();
 		$productor=$this->db->query('SELECT username FROM Usuarios where Id="'.$registro->id.'"')->fetch_object()->username;
 		
-		$msg="Lote: ".$registro->id_curso."<br>Fecha: ".$registro->add_date." ".$registro->add_hour."<br>Productor: ".utf8_encode($productor)."<br><br>Últimas localizaciones:";
+		$msg="Lote: ".$registro->id_curso.
+		"<br>Fecha: ".$registro->add_date." ".$registro->add_hour.
+		"<br>Productor: ".utf8_encode($productor).
+		"<br>Cantidad Caña: ".$registro->prod_cana." carga(s)".
+		"<br>Cantidad Panela: ".$registro->prod_panela." carga(s)".
+		"<br>Tipo: ".$registro->tipo_panela.
+		"<br><br>Últimas localizaciones:";
 		
 		$ubicaciones=$this->db->query('SELECT * FROM Ubicacion where Packet_id="'.$qr_info.'"');
 		$i=1;
@@ -215,7 +221,7 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 		return [FALSE,"Paquete no encontrado"];
 		
 	}
-	function registrar($doc,$id_curso,$prod_ca,$prod_pa,$id_registrador,$lat,$lon){
+	function registrar($doc,$id_curso,$prod_ca,$prod_pa,$tipo,$id_registrador,$lat,$lon){
 		$title = $this->db->real_escape_string($doc);
 		$existe=$this->db->query('SELECT id FROM Usuarios where id="'.$doc.'"');
 		
@@ -254,7 +260,7 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 	#		return [TRUE,"Registro exitoso para almuerzo "];}}
 			$fecha=date("Ymd");
 			$hora=date("H:i:s");
-			if ($this->db->query('INSERT into Registrados VALUES ("'.md5($id_curso.$doc.$fecha.$hora).'","'.$doc.'","'.$fecha.'","'.$hora.'","'.$id_curso.'",'.$prod_ca.",".$prod_pa.',"'.$id_registrador.'")')){
+			if ($this->db->query('INSERT into Registrados VALUES ("'.md5($id_curso.$doc.$fecha.$hora).'","'.$doc.'","'.$fecha.'","'.$hora.'","'.$id_curso.'",'.$prod_ca.",".$prod_pa.',"'.$tipo.'","'.$id_registrador.'")')){
 				//Call Whasapp sevice with md5($id_curso.$doc.$fecha.$hora) and
 				
 				#$movil=$this->db->query('SELECT movil from Usuarios where id="'.$doc.'"')->fetch_object();
@@ -273,7 +279,7 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 				#return [TRUE,"INSERT into Ubicacion VALUES ('".md5($id_curso.$doc.$fecha.$hora)."',".$lat.",".$lon.",'Trapiche #XX'"];
 				return [TRUE,utf8_encode($r->username).' # '.$r->CC.' <b style="color:red"> - '.$movil.'</b>'];
 				
-			}else {return [FALSE, 'INSERT into Registrados VALUES ("'.md5($id_curso.$doc.$fecha.$hora).'","'.$doc.'","'.$fecha.'","'.$hora.'","'.$id_curso.'",'.$prod_ca.",".$prod_pa.',"'.$id_registrador.'")'];}
+			}else {return [FALSE, 'Error. Asegurese que todos los campos sean llenados'];}
 		}
 		else {
 			return [FALSE, "Fuera de la hora de registro para el lote ".$id_curso];

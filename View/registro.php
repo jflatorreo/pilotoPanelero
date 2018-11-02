@@ -177,8 +177,15 @@ function showPosition(position) {
 			
 			<hr><H2>Producción</H2>
 			<div class="ss-item-required">
-			Caña: <input required type="number" name="prod_ca" style="width: 59px"> Kg <br>
-			Panela: <input required type="number" name="prod_pa" style="width: 59px"> Kg <br><br>
+			Caña: <input required type="number" min="0" name="prod_ca" id="prod_ca" style="width: 59px"> Cargas <br>
+			Panela: <input required type="number" min="0" name="prod_pa" style="width: 59px"
+			            onchange="document.getElementById('prod_ca').min=this.value;"> Cargas <br>
+			Tipo: <select required name="tipo">
+			<option value="">Seleccione el tipo de Panela</option>
+			<option value="Bloque">Bloque</option>
+			<option value="Pulverizada">Pulverizada</option>
+			</select>
+			<br><br>
 			</div>
 			<hr><H2>Identificación</H2>
 			<video id="preview" style="width: 70%;" onclick="scan()"></video><br>

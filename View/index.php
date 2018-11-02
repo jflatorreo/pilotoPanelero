@@ -64,6 +64,7 @@ if (isset($_SESSION['k_id'])) {
 		echo '<a href="reportes.php"><h2>Reportes</h2></a>';
 		echo '<a href="registro.php"><h2>Registro de producción</h2></a>';
 		echo '<a href="control.php"><h2>Punto de Control</h2></a>';
+		echo '<a href="tracking.php"><h2>Seguimiento a paquetes</h2></a>';
 		echo '<a href="../Controller/logout.php"><h2>Salir</h2></a>';
 		
 		echo '<div id="message-list" data-counter="'.(int)$db->check_changes().'">';
