@@ -22,6 +22,7 @@ class db{
 	 *
 	 * @return void
 	 */
+	//Se hace la conexiópn inicial a las bases de datos del proyecto.
 	function __construct(){
 		//$this->db_connect('localhost','id1722893_root','DB_CII_2017','id1722893_asistencia');
 		$this->db_connect('localhost','panelero','P4n3l4','CIIO2018');
@@ -39,6 +40,7 @@ class db{
 	 * @param mixed $database
 	 * @return void
 	 */
+	// Esta es la funcion en detalle para la conexion de la base de datos.
 	function db_connect($host,$user,$pass,$database){
 		$this->db = new mysqli($host, $user, $pass, $database);
 
@@ -72,6 +74,7 @@ class db{
 	 *
 	 * @return void
 	 */
+	//Esto hace la  actualización de los cambios que se tienen de la trazabilidad.
 	function register_changes(){
 		$this->db->query('UPDATE news SET counting = counting + 1 WHERE id=1');
 	}
@@ -84,6 +87,7 @@ class db{
 	 *
 	 * @return void
 	 */
+	// En esta funcion se hace la revision de los cambios que se realizaron ultimamente en las bd
 	function get_news($id_curso){
 		$validar=$this->validar_hora($id_curso);
 		if ($validar[0]){			
