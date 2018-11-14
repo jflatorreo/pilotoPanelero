@@ -1,3 +1,4 @@
+//En esta parte se hace la cerificacion de usuarios
 <?php require('../View/common.php');
 //get current counter
 $data['current'] = (int)$db->check_changes();
