@@ -5,6 +5,7 @@
  * @author Eliza Witkowska <kokers@codebusters.pl>
  * @link http://blog.codebusters.pl/en/entry/ajax-auto-refresh-volume-ii
  */
+/** configuracion de la hora  */
 date_default_timezone_set('America/Bogota');
 
 class db{
@@ -22,6 +23,7 @@ class db{
 	 *
 	 * @return void
 	 */
+	//Se hace la conexiópn inicial a las bases de datos del proyecto.
 	function __construct(){
 		//$this->db_connect('localhost','id1722893_root','DB_CII_2017','id1722893_asistencia');
 		$this->db_connect('localhost','panelero','P4n3l4','CIIO2018');
@@ -39,6 +41,7 @@ class db{
 	 * @param mixed $database
 	 * @return void
 	 */
+	// Esta es la funcion en detalle para la conexion de la base de datos.
 	function db_connect($host,$user,$pass,$database){
 		$this->db = new mysqli($host, $user, $pass, $database);
 
@@ -72,6 +75,7 @@ class db{
 	 *
 	 * @return void
 	 */
+	//Esto hace la  actualización de los cambios que se tienen de la trazabilidad.
 	function register_changes(){
 		$this->db->query('UPDATE news SET counting = counting + 1 WHERE id=1');
 	}
@@ -84,6 +88,7 @@ class db{
 	 *
 	 * @return void
 	 */
+	// En esta funcion se hace la revision de los cambios que se realizaron ultimamente en las bd
 	function get_news($id_curso){
 		$validar=$this->validar_hora($id_curso);
 		if ($validar[0]){			
@@ -179,6 +184,7 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 		}
 		return FALSE;
 	}
+	/* En esta parte se hace el ingreso de los puntos en los cuales se ha encontrado el paquete*/
 	function track_qr($qr_info){
 		$existe=$this->db->query('SELECT * FROM Registrados where Packet_id="'.$qr_info.'"');
 		if ($existe->num_rows==0){
@@ -206,6 +212,7 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 		
 		return [TRUE,$msg];
 	}
+	/* Funcion para agregar la ubicacion del punto de control, teniendo en cuenta las coordenas en las que se encuentra el punto de registro*/
 	function add_control_point($code,$lat,$lon,$register_id){
 		$query='SELECT username FROM Usuarios where id="'.$register_id.'"';
 		$pointName=$this->db->query($query)->fetch_object()->username;
@@ -221,6 +228,7 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 		return [FALSE,"Paquete no encontrado"];
 		
 	}
+	/*Funcion para el registro de produccion de un productor*/
 	function registrar($doc,$id_curso,$prod_ca,$prod_pa,$tipo,$id_registrador,$lat,$lon){
 		$title = $this->db->real_escape_string($doc);
 		$existe=$this->db->query('SELECT id FROM Usuarios where id="'.$doc.'"');
@@ -235,6 +243,8 @@ return '<p align="right" style="font-size: 1.5em;color:#D3DE23">Total registrado
 		if (!in_array($id_curso, $Array)){
 			return [FALSE,"El Usuario no esta registado en el curso ".$id_curso];
 		}*/
+		
+		
 		$validar=$this->validar_hora($id_curso);
 		if ($validar[0]){			
 			$hora_inicio=$validar[1];

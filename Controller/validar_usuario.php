@@ -20,7 +20,7 @@ if($_POST["username"] != "" && $_POST["password"] != "")
 	
 	$result = $db->db->query($query);
 	
-	
+	// Se buscan los datos ingresado en las bases de datos y se verifica la correspondencia
 	if($row = $result->fetch_array() ){
 		if($row["U_password"] == $password){
 			setcookie('k_username', $username , time()+ (10 * 365 * 24 * 60 * 60));

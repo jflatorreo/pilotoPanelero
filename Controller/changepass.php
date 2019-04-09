@@ -32,6 +32,7 @@ if($_POST && !empty($_POST['npass'])){
 	<title></title>
 </head>
 <body>
+	//en esta seccion se hace el cambio en la bd
 		<form method="post" action="#">
                     <table>
 			<tr><td>Contraseña nueva:</td><td><input type="password" name="npass" /></td></tr>
