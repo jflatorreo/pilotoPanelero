@@ -135,7 +135,7 @@ if (isset($_POST["cc"])) {
 				//echo $query;
 				$consecutivo=$consecutivo+1;				
 				$password=md5($password);
-				$query = 'INSERT INTO Usuarios_temp (Id, Username, CC, U_password, valor, Tipo)
+				$query = 'INSERT INTO Usuarios (Id, Username, CC, U_password, valor, Tipo)
 				VALUES (\''.$cc.'\',\''.utf8_decode($username).'\','.$consecutivo.',\''.$password.'\',0,\''.$tipo.'\')';
 				//echo $query;
 				if (!$db->db->query($query))
